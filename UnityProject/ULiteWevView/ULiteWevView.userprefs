@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{9121DC45-CD46-1C0E-AE5E-0CA53D661CA4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ULiteWevView/ULiteWebView.cs">
+    <Files>
+      <File FileName="Assets/Demo/Demo.cs" Line="62" Column="26" />
+      <File FileName="Assets/ULiteWevView/ULiteWebView.cs" Line="237" Column="32" NotebookId="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ULiteWevView PreferredExecutionTarget="Unity.Editor" />
+  <MultiItemStartupConfigurations />
+</Properties>

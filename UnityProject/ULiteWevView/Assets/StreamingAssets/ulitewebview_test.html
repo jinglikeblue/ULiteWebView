@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <style>
+        
+        </style>
+    
+    <head>
+        <meta charset="UTF-8">
+            <link rel="icon" href="favicon.ico" type="image/x-icon" />
+            <meta id="view" name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+            />
+            <title>ULiteWebView</title>
+    </head>
+    <script>
+        function test1(){
+            window.location.href = "ulitewebview://ShowMsg";
+        }
+    
+    function test2(){
+        window.location.href = "ulitewebview://ShowMsg?world";
+    }
+    
+    function callJS(url){
+        document.getElementById("divMsg").innerHTML = url;
+    }
+    
+        </script>
+    
+    <body onload="onload()">
+        <button onclick="test1()">ulitewebview://ShowMsg</button><br />
+        <button onclick="test2()">ulitewebview://ShowMsg?world</button><br />
+        <div id="divMsg">Unity message will show here...</div><br />
+    </body>
+    
+</html>
