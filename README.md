@@ -1,7 +1,7 @@
 # 「ULiteWebView」使用指南
 
 ## 1.简介
-ULiteWebView是一个极度轻量化的Unity内嵌WebView插件。
+ULiteWebView是一个极度轻量化的Unity内嵌WebView插件
 
 支持的平台：安卓/苹果
 
