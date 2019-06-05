@@ -1,7 +1,9 @@
 package com.jing.unity.ulitewebview;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -172,9 +174,13 @@ public class ULiteWebView {
                 view.addView(_webView);
 
                 ViewGroup.LayoutParams lp = _webView.getLayoutParams();
-                WindowManager wm = Unity.ins.getActivity().getWindowManager();
-                int screenW = wm.getDefaultDisplay().getWidth();
-                int screenH = wm.getDefaultDisplay().getHeight();
+
+                WindowManager manager = Unity.ins.getActivity().getWindowManager();
+                DisplayMetrics outMetrics = new DisplayMetrics();
+                manager.getDefaultDisplay().getRealMetrics(outMetrics);
+                int screenW = outMetrics.widthPixels;
+                int screenH = outMetrics.heightPixels;
+
                 lp.width = screenW - _left - _right;
                 lp.height = screenH - _top - _bottom;
                 _webView.setX(_left);
