@@ -11,34 +11,69 @@ namespace Jing.ULiteWebView
     /// </summary>
     public class ULiteWebView : MonoBehaviour
     {
+        private static ULiteWebView _ins;
+        public static ULiteWebView Ins
+        {
+            get
+            {
+                if (null == _ins)
+                {
+                    _ins = GameObject.FindObjectOfType<ULiteWebView>();
 
-        [Header("距离屏幕上边缘距离")]
-        public int top = 0;
-        [Header("距离屏幕下边缘距离")]
-        public int bottom = 0;
-        [Header("距离屏幕左边缘距离")]
-        public int left = 0;
-        [Header("距离屏幕右边缘距离")]
-        public int right = 0;
+                    if (null == _ins)
+                    {
+                        var go = new GameObject();
+                        go.name = typeof(ULiteWebView).Name;
+                        go.AddComponent<ULiteWebView>();
+                        _ins = go.GetComponent<ULiteWebView>();                        
+                    }
+
+                    _ins.Init();
+                    DontDestroyOnLoad(_ins.gameObject);
+                }
+                return _ins;
+            }
+        }
+
+        /// <summary>
+        /// 销毁单例
+        /// </summary>
+        public static void DisposeIns()
+        {
+            if (null != _ins)
+            {
+                if(null != _ins.gameObject)
+                {
+                    GameObject.Destroy(_ins.gameObject);
+                }
+                _ins.Dispose();
+                _ins = null;
+            }
+        }
 
         AULite4Platform _ulite;
         Dictionary<string, Action<String>> _jsActionsDic = new Dictionary<string, Action<string>>();
 
-        void Start()
+        void Init()
         {
+            if (null == _ulite)
+            {
 #if !UNITY_EDITOR
-    #if UNITY_ANDROID
-                    _ulite = new ULiteAndroidWebView(getFullName(this.gameObject));
-    #elif UNITY_IOS
+#if UNITY_ANDROID
+                Debug.Log("ULiteWebView:Android");
+                _ulite = new ULiteAndroidWebView(getFullName(this.gameObject));
+#elif UNITY_IOS
+                Debug.Log("ULiteWebView:iOS");
                 _ulite = new ULiteIosWebView(getFullName(this.gameObject));
-    #endif
 #endif
+#endif
+            }
         }
 
-
-        void Update()
+        void Dispose()
         {
-
+            Close();
+            _ulite = null;
         }
 
         /// <summary>
@@ -48,8 +83,8 @@ namespace Jing.ULiteWebView
         /// <param name="bottom"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        public void Show()
-        {            
+        public void Show(int top = 20, int bottom = 20, int left = 20, int right = 20)
+        {
             if (null == _ulite)
             {
                 return;
@@ -115,7 +150,8 @@ namespace Jing.ULiteWebView
             _ulite.CallJS(funName, msg);
         }
 
-        void OnJsCall(string msg){
+        void OnJsCall(string msg)
+        {
             Debug.Log("js call unity: " + msg);
             string iName = null;
             string paramsStr = null;
@@ -138,20 +174,21 @@ namespace Jing.ULiteWebView
                     _jsActionsDic[iName](paramsStr);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.Log(string.Format("ULiteWebView：Wrong JS Msg [{0}]", msg));
             }
         }
 
-        
+
 
         /// <summary>
         /// 注册供JS调用的方法
         /// </summary>
         /// <param name="funName">方法名：JS通过该方法名调用对应方法</param>
         /// <param name="fun">方法</param>
-        public void RegistJsInterfaceAction(string interfaceName, Action<String> action){
+        public void RegistJsInterfaceAction(string interfaceName, Action<String> action)
+        {
             _jsActionsDic[interfaceName] = action;
         }
 
@@ -277,14 +314,15 @@ namespace Jing.ULiteWebView
         [DllImport("__Internal")]
         private static extern void _callJS(string funName, string msg);
 
-        
-        public ULiteIosWebView(string gameObjectName){
+
+        public ULiteIosWebView(string gameObjectName)
+        {
             _registCallBackGameObjectName(gameObjectName);
         }
 
         public override void CallJS(string funName, string msg)
         {
-            _callJS(funName,msg);
+            _callJS(funName, msg);
         }
 
         public override void Close()
