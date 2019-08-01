@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         Unity.ins.activity = this;
         ULiteWebView uWebView = new ULiteWebView();
         uWebView.show(50,50,50,50);
-        uWebView.loadUrl("file:///android_asset/ulitewebview_test.html");
+        uWebView.loadUrl("http://www.baidu.com");
 
     }
 }
