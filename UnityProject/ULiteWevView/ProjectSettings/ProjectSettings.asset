@@ -156,8 +156,8 @@ PlayerSettings:
     Android: pieces.jing.ulitewebview
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 16
-  AndroidTargetSdkVersion: 23
+  AndroidMinSdkVersion: 17
+  AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1

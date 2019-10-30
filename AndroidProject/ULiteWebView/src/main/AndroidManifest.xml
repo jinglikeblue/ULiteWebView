@@ -2,5 +2,7 @@
     package="com.jing.unity.ulitewebview">
 
 <uses-permission android:name="android.permission.INTERNET"/>
+<application android:usesCleartextTraffic="true">
 
+</application>
 </manifest>

@@ -24,11 +24,10 @@ namespace Jing.ULiteWebView
                     {
                         var go = new GameObject();
                         go.name = typeof(ULiteWebView).Name;
-                        go.AddComponent<ULiteWebView>();
-                        _ins = go.GetComponent<ULiteWebView>();                        
+                        _ins = go.AddComponent<ULiteWebView>();
+                        _ins.Init();
                     }
-
-                    _ins.Init();
+                    
                     DontDestroyOnLoad(_ins.gameObject);
                 }
                 return _ins;
@@ -54,10 +53,17 @@ namespace Jing.ULiteWebView
         AULite4Platform _ulite;
         Dictionary<string, Action<String>> _jsActionsDic = new Dictionary<string, Action<string>>();
 
+        /// <summary>
+        /// 正在加载Url的事件
+        /// </summary>
+        public event Action<string> onLoadingUrl;
+
         void Init()
         {
             if (null == _ulite)
             {
+                Debug.Log("ULiteWebView所在位置：" + getFullName(gameObject));
+
 #if !UNITY_EDITOR
 #if UNITY_ANDROID
                 Debug.Log("ULiteWebView:Android");
@@ -83,7 +89,7 @@ namespace Jing.ULiteWebView
         /// <param name="bottom"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        public void Show(int top = 20, int bottom = 20, int left = 20, int right = 20)
+        public void Show(int top = 0, int bottom = 0, int left = 0, int right = 0)
         {
             if (null == _ulite)
             {
@@ -148,6 +154,16 @@ namespace Jing.ULiteWebView
             }
 
             _ulite.CallJS(funName, msg);
+        }
+
+        /// <summary>
+        /// 当webview加载页面时的回调
+        /// </summary>
+        /// <param name="url"></param>
+        void OnLoadingUrl(string url)
+        {
+            Debug.LogFormat("loading url: {0}  对象ID：{1}", url, this.GetInstanceID());
+            onLoadingUrl?.Invoke(url);
         }
 
         void OnJsCall(string msg)

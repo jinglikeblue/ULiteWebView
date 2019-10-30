@@ -77,6 +77,9 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSString *url = [[request URL] absoluteString];
+
+    UnitySendMessage([_gameObjectName UTF8String], "OnLoadingUrl", [url UTF8String]);
+
     NSRange range = [url rangeOfString:@"ulitewebview://"];
     if(range.location != NSNotFound){
         NSString *msg = [url substringFromIndex:range.length];
