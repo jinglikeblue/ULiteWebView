@@ -37,6 +37,15 @@ Demo：[https://fir.im/vstq](https://fir.im/vstq)
 >项目代码任意位置通过调用「ULiteWebView.Ins」单例即可使用
 
 ## 4.API说明
+
+### 加载Url时的事件
+```
+/// <summary>
+/// 正在加载Url的事件
+/// </summary>
+public event Action<string> onLoadingUrl;
+```
+
 ### 显示WebView
 ```
 /// <summary>
