@@ -1,5 +1,12 @@
 # 「ULiteWebView」使用指南
 
+## 更新日志
+
+### 2020-10-29
+- iOS中将UIWebView升级为WKWebView
+
+---
+
 ## 1.简介
 ULiteWebView是一个极度轻量化的Unity内嵌WebView插件
 
