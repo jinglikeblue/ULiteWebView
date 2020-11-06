@@ -88,15 +88,18 @@ public class ULiteWebView {
             WebView webView = new WebView(Unity.ins.getActivity());
             webView.setWebViewClient(new WebViewClient() {
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Log.i("ULiteWebView", url);
+
+                    Unity.ins.call(_gameObjectName, "OnLoadingUrl", url );
+
                     if (true == url.startsWith("ulitewebview://")) {
+                        //返回true表示不需要的再做处理了
                         onJsCall(url);
                         return true;
-                    }
-                    else if(url.startsWith("file://") || url.startsWith("http://") || url.startsWith("https://")){
+                    } else if (url.startsWith("file://") || url.startsWith("http://") || url.startsWith("https://")) {
                         //加载网页
-                        return super.shouldOverrideUrlLoading(view,url);
-                    }
-                    else{
+                        return super.shouldOverrideUrlLoading(view, url);
+                    } else {
                         try {
                             // 以下固定写法
                             final Intent intent = new Intent();
@@ -134,6 +137,7 @@ public class ULiteWebView {
         if (null != _webView) {
             FrameLayout view = (FrameLayout) Unity.ins.getActivity().getWindow().getDecorView();
             view.removeView(_webView);
+            _webView.resumeTimers();
             _webView.destroy();
             _webView = null;
         }
@@ -180,6 +184,9 @@ public class ULiteWebView {
                 manager.getDefaultDisplay().getRealMetrics(outMetrics);
                 int screenW = outMetrics.widthPixels;
                 int screenH = outMetrics.heightPixels;
+
+                Log.i("ULiteWebView", String.format("屏幕宽高 [w:%d , h:%d]", screenW, screenH));
+                Log.i("ULiteWebView", String.format("展示参数 [T:%d , B:%d , L:%d , R:%d]", _top, _bottom, _left, _right));
 
                 lp.width = screenW - _left - _right;
                 lp.height = screenH - _top - _bottom;

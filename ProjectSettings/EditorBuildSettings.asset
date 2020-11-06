@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Demo/ULiteWebView.unity
+    guid: f7d83b8f5f02a3844bde09ee548ca893
   m_configObjects: {}

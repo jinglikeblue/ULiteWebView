@@ -1,4 +1,5 @@
-﻿using Jing.ULiteWebView;
+﻿using System;
+using Jing.ULiteWebView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,14 @@ public class Demo : MonoBehaviour {
         btnClose.SetActive(false);
         btnLocalUrl.SetActive(true);
         btnCallJs.SetActive(false);
-	}
+
+        ULiteWebView.Ins.onLoadingUrl += OnLoadingUrl;
+    }
+
+    private void OnLoadingUrl(string url)
+    {
+        msgContent.text = url;
+    }
 
     void ShowMsg(string info)
     {

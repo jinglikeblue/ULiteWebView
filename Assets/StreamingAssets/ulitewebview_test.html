@@ -10,14 +10,14 @@
             <meta id="view" name="viewport" content="height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
             />
             <title>ULiteWebView</title>
-    </head>
+            </head>
     <script>
         function test1(){
-            window.location.href = "ulitewebview://ShowMsg";
+            window.webkit.messageHandlers.ULiteWebView.postMessage("ShowMsg");
         }
     
     function test2(){
-        window.location.href = "ulitewebview://ShowMsg?world";
+        window.webkit.messageHandlers.ULiteWebView.postMessage("ShowMsg?world");
     }
     
     function callJS(url){
