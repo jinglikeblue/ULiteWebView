@@ -100,6 +100,39 @@ namespace Jing.ULiteWebView
         }
 
         /// <summary>
+        /// 以RectTransform的屏幕位置显示
+        /// </summary>
+        /// <param name="rectTransform"></param>
+        /// <param name="eventCamera"></param>
+        public void Show(RectTransform rectTransform, Camera eventCamera = null)
+        {
+            if (eventCamera == null)
+            {
+                Canvas canvas = rectTransform.GetComponentInParent<Canvas>();
+                if (canvas != null && canvas.renderMode == RenderMode.ScreenSpaceCamera)
+                {
+                    eventCamera = canvas.worldCamera;
+                }
+            }
+
+            if (rectTransform != null)
+            {
+                Vector3[] corners = new Vector3[4];
+                rectTransform.GetWorldCorners(corners);
+                Rect screen = eventCamera == null ? new Rect(0, 0, Screen.width, Screen.height) : eventCamera.pixelRect; 
+                int top = (int)(screen.height - RectTransformUtility.WorldToScreenPoint(eventCamera, corners[1]).y);
+                int bottom = (int)(RectTransformUtility.WorldToScreenPoint(eventCamera, corners[0]).y);
+                int left = (int)(RectTransformUtility.WorldToScreenPoint(eventCamera, corners[0]).x);
+                int right = (int)(screen.width - RectTransformUtility.WorldToScreenPoint(eventCamera, corners[3]).x);
+                Debug.Log(top + "," + bottom + "," + left + "," + right);
+                Show(top, bottom, left, right);
+            }
+            else
+            {
+                Show();
+            }
+        }
+        /// <summary>
         /// 使用WebView加载指定的URL，访问网页用Http://开头
         /// </summary>
         /// <param name="url">访问的URL地址</param>
